@@ -1,0 +1,46 @@
+
+/* home.ejs */
+.column{
+    min-height: 40vh;
+    margin: 0 0.7rem;
+}
+
+.searchTags{
+    min-height: 65%;
+}
+
+.card-footer-item{
+    max-height: 5%;
+}
+
+input[type="checkbox"]{
+    display: none;
+}
+
+.card-footer{
+    position: absolute;
+    width: 80%;
+    bottom: 0.7rem;
+    left: 10%;
+}
+
+.card:not(:last-child){
+    margin-bottom: 0;
+}
+
+.cardImg{
+    object-fit: cover;
+}
+
+/* edit.ejs style */
+.column{
+    min-height: 35vh;
+}
+
+.searchTags{
+    min-height: 65%;
+}
+
+.card-footer-item{
+    max-height: 5%;
+}
