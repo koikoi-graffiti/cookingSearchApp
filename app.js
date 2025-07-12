@@ -24,15 +24,9 @@ app.engine('ejs', ejsMateEngine);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'))); //静的ファイル
-app.use(express.urlencoded({ extended: true }));
-
-//session setup
-app.use(session({
-    secret: 'mysecret',
-    saveUninitialized: true,
-    resave: false,
-}));
+app.use(express.urlencoded({ extended: false }));
 
 const conn = mysql.createConnection({
     host: "localhost",
@@ -41,41 +35,60 @@ const conn = mysql.createConnection({
     database: "cookingSearchDB"
 });
 
+//session setup
+app.use(session({
+    secret: 'mysecret',
+    saveUninitialized: true,
+    resave: false,
+}));
+app.use(flash());
+
 //passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(function verify(username, password, cb) {
     const sql = `SELECT * FROM users WHERE username = '${username}'`
-    conn.query(sql, async (err, row) => {
-        if (err) { return cb(err); }
-        if (!row) { return cb(null, false, { message: 'Incorrect username or password.' }); }
+    conn.query(sql, async(err, res) => {
+        // if (err) { 
+        //     console.log(err)
+        //     return cb(err, false, { message: 'ユーザー名が間違っています。.①' }); }      
+        // if (!(res)) { return cb(null, false, { message: 'ユーザー名が間違っています。' }) }
 
-        bcrypt.compare(password, row.password, (err, result) => {
-            return cb(null, row);
-            if(err) {return cb(null, false, { message: 'Incorrect username or password.' });}
+        if(res == false){ 
+            return cb(null, false, { message: 'ユーザー名またはパスワードが間違っています。' })
+         }
+
+        bcrypt.compare(password, res[0].password).then(
+            function(result){
+                if(result) {
+                    return cb(null, res);
+                } else {
+                    return cb(null, false, { message: 'ユーザー名またはパスワードが間違っています。' });
+                }
         });
     });
 }));
 
 passport.serializeUser((user, cb) => {
     process.nextTick(function() {
-        console.log('serializer called!');
-        cb(null, { id: user.id, username: user.username });
+        //console.log('serializer called!');
+        //cb(null, { id: user.id, username: user.username });
+        cb(null, user);
     });
 });
 
 passport.deserializeUser(async (user, cb) => {
-    console.log('deserializer called!');
+    //console.log('deserializer called!');
     process.nextTick(function() {
         return cb(null, user);
     });
 });
 
-app.use(flash());
-
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.messages = req.flash('success')
+    res.locals.errors = req.flash('error')
     next();
 });
 

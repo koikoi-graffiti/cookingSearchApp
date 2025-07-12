@@ -2,8 +2,6 @@
 const form = document.querySelector('#searchForm');
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    //const categoriesData = JSON.parse(categoryAllData);
-    //console.log(categoryAllData);
 
     //get requested words
     const searchMaterials =[];
@@ -68,7 +66,7 @@ form.addEventListener('submit', async (e) => {
             const interval = setInterval( async () => {
                 //X時間ごとに実行される処理
                 const res = await axios.get(rankingURLs[i])
-                console.log(res.data.result[0])
+                // console.log(res.data.result[0])
 
                 //検索結果HTML反映
                 createCard4(res);
@@ -80,11 +78,26 @@ form.addEventListener('submit', async (e) => {
                     clearInterval(interval);
                 }
             }, 2000)
+
+            //Clear SearchForm and tagColor
+            const finishedSearchTags = document.querySelector('#searchTags');
+            console.log(finishedSearchTags.children);
+            finishedSearchTags.innerHTML = "";
+
+            const selectItems = document.getElementsByName('fridgeItem');
+            console.log(selectItems);
+            for(let selectItem of selectItems){
+                if(selectItem.checked) {
+                    selectItem.checked = false ;
+                    selectItem.parentNode.classList.replace('is-primary', 'is-info');
+                }
+            }
         })
         .catch(err => {
             console.error('エラー:', err);
         });
 })
+
 
 const createCard4 = (resData) => {
     for ( let recipe of resData.data.result) {
@@ -185,8 +198,6 @@ selectItems.forEach( (selectItem) => {
             // チェックボックスがONのときの処理
             selectItem.closest('label').classList.replace('is-info', 'is-primary');
 
-            console.log(selectItem.value);
-
             const searchItemLabel = document.createElement('LABEL');
             searchItemLabel.className = 'tag';
             searchItemLabel.innerText = selectItem.value;
@@ -208,4 +219,3 @@ selectItems.forEach( (selectItem) => {
         
     })
 });
-"input:checked[name=name属性名]]"

@@ -1,8 +1,15 @@
 
 /* home.ejs */
-.column{
-    min-height: 40vh;
-    margin: 0 0.7rem;
+#itemsForm, #searchForm, #updateItemsForm{
+    min-height: 150px;
+}
+
+#updateItemsForm{
+    margin: 15px 0;
+}
+
+.itemsForm-wrapper{
+    margin-right: 10px;
 }
 
 .searchTags{
@@ -18,10 +25,6 @@ input[type="checkbox"]{
 }
 
 .card-footer{
-    position: absolute;
-    width: 80%;
-    bottom: 0.7rem;
-    left: 10%;
 }
 
 .card:not(:last-child){
@@ -34,7 +37,7 @@ input[type="checkbox"]{
 
 /* edit.ejs style */
 .column{
-    min-height: 35vh;
+    /* min-height: 35vh; */
 }
 
 .searchTags{
@@ -43,4 +46,9 @@ input[type="checkbox"]{
 
 .card-footer-item{
     max-height: 5%;
+}
+
+.editItemFormContent{
+    padding-top: 0;
+    padding-bottom: 0;
 }

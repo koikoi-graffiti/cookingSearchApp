@@ -4,8 +4,11 @@ const router = express.Router();
 const passport = require('passport'); //passport
 
 const userController = require('../controllers/user');
+const { Redirect } = require('request/lib/redirect');
 
 //ユーザー登録, ログイン
+router.get('/', (req, res) => { res.redirect('/login'); });
+
 router.get('/register', userController.renderRegisterForm);
 
 router.post('/register', userController.createUser);

@@ -5,27 +5,31 @@
 
     <main class="mt-6">
         <div class="columns is-centered">
-            <div class="column card tags is-two-fifths mb-0">
-                <div class="card-content">
-                <form action="/homepage/:id" method="POST" id="updateFridgeItems">
-                    <% for (let userItem of loggedinUser.userItems) {%>
-                        <div class="tag mb-1 is-info is-medium">
-                            <p><%= userItem %></p>
-                            <input type="hidden" value="<%=userItem%>" name="fridgeItem">
-                            <button class="delete deleteItem is-small"></button>
-                        </div>
-                    <% } %>
+            <div class="column card tags is-three-fifths mb-0">
+                <div class="card-content editItemFormContent">
+                    <div class="control">
+                        <input class="input" type="text" type="submit" id="inputNewItem">
                     </div>
 
-                    <button type="submit" class="button">更新</button>
-                </form>
+                    <form action="/homepage/<%= loggedinUser.id %>" method="POST" id="updateItemsForm">
+                        <% for (let userItem of loggedinUser.userItems) {%>
+                            <div class="tag mb-1 is-info is-medium">
+                                <p><%= userItem %></p>
+                                <input type="hidden" value="<%=userItem%>" name="fridgeItem">
+                                <button class="delete deleteItem is-small"></button>
+                            </div>
+                        <% } %>
 
-                <input type="text" type="submit" id="inputNewItem">
+                    </form>
 
-                <footer class="card-footer">
-                    <a href="/homepage/<%= loggedinUser._id %>" class="button card-footer-item card-footer-item">戻る</a>
-                </footer>
+                    <footer class="card-footer columns py-3">
+                        <a href="/homepage/<%= loggedinUser.id %>" class="button column mr-2 card-footer-item">戻る</a>
+                        <button type="submit" form="updateItemsForm" class="button column card-footer-item">更新</button>
+                    </footer>
+                </div>
             </div>
+
+            
         </div>
     </main>
 </div>

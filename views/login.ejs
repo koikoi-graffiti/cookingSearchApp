@@ -1,5 +1,12 @@
 <%- layout('layouts/boilerplate') %>
 
+<% if(errors && errors.length){ %>
+<div class="notification is-success">
+    <%= errors %>
+    <button class="delete"></button>
+</div>
+<% } %>
+
 <div class="container">
     <%- include("../partials/navbar") %>
 

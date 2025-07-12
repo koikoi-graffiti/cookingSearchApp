@@ -1,13 +1,20 @@
 <%- layout('layouts/boilerplate') %>
 
-<div class="container">
-    <%- include("../partials/navbar") %>
+<% if(errors && errors.length){ %>
+<div class="notification is-success">
+    <button class="delete"></button>
+    <%= errors %>
+</div>
+<% } %>
 
+<div class="container">
+    <%- include("../partials/navbar") %>   
+    
     <main class="mt-6">
         <div class="columns is-centered">
 
-            <div class="column card tags mb-0">
-                <form id="addItemIntoSearch">
+            <div class="column card tags mb-0 itemsForm-wrapper">
+                <form id="itemsForm">
                     <div class="card-content">
                     <%  for (let userItem of loggedinUser.userItems) { %>
                         <label class="tag mb-1 is-info is-medium"><input type="checkbox" name="fridgeItem" value="<%= userItem %>"><%= userItem %></label>
@@ -26,10 +33,11 @@
                     <div class="card-content tags are-medium" id="searchTags">
                         <!-- 冷蔵庫の食材リストからセレクトされた検索ワードがここに加わる。-->
                     </div>
-                    <footer class="card-footer">
-                        <button type="submit" class="button card-footer-item card-footer-item">検索</button>
-                    </footer>
                 </form>
+
+                <footer class="card-footer">
+                    <button type="submit" form="searchForm" class="button card-footer-item card-footer-item">検索</button>
+                </footer>
             </div>
     </main>
 

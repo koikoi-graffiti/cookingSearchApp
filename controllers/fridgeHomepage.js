@@ -9,6 +9,7 @@ const conn = mysql.createConnection({
 });
 
 module.exports.renderHomepage = async (req, res) => {
+    //console.log(req.params._id);
     const user = req.session.user[0];
     const sql = `SELECT * FROM users WHERE id='${user.id}'`
     conn.query(sql, (err, result) => {
@@ -27,7 +28,7 @@ module.exports.updateFridgeItems = async (req, res) => {
         const update_sql = `UPDATE users SET userItems='${items}' WHERE id='${result[0].id}'`;
         conn.query(update_sql, (err, result) => {
             if (err) throw err;
-            res.redirect('/homepage/:id');
+            res.redirect(`/homepage/${loggedinUser[0].id}`);
         });
     });
 };

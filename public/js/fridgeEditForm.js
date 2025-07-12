@@ -2,6 +2,7 @@
 const deleteButtons = document.querySelectorAll('.deleteItem');
 deleteButtons.forEach( (deleteButton) => {
     deleteButton.addEventListener('click', () => {
+        console.log('削除')
         deleteButton.parentNode.remove();
     });
 });
@@ -29,7 +30,8 @@ newItem.addEventListener('change', (e) => {
     deleteBtn.className = "delete deleteItem is-small"
 
     //insert HTML tags
-    const updateFridgeItemsForm = document.querySelector('#updateFridgeItems');
+    const updateFridgeItemsForm = document.querySelector('#updateItemsForm');
+    console.log(updateFridgeItemsForm)
     newItemDiv.appendChild(showNewItem, newItemInput, deleteBtn);
     newItemDiv.appendChild(newItemInput);
     newItemDiv.appendChild(deleteBtn);

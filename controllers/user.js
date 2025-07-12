@@ -35,7 +35,7 @@ module.exports.createUser = async (req, res) => {
         console.log('User情報を保存しました。')
         res.redirect('/homepage/:id');
     } catch (e) {
-        console.log(e)
+        //console.log(e)
         res.redirect('/register');
     }
 };
@@ -46,8 +46,10 @@ module.exports.renderLoginForm = (req, res) => {
 
 module.exports.login = (req, res) => {
     //すでにここではpassport.authenticateによって認証が終わっている
+    const { id } = req.user[0];
     req.session.user = req.user;
-    res.redirect('/homepage/:id');
+    req.flash('success', 'ログイン成功！！！')
+    res.redirect(`/homepage/${id}`);
 }
 
 module.exports.logout = (req, res) => {
