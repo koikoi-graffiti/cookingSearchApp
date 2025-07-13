@@ -22,3 +22,7 @@
 
 # デモ動画
 Coming Soon...
+
+# 環境
+- Node.js / Express / HTML / CSS / JavaScript / MySQL(変更前:MongoDB) / 
+- API「楽天レシピAPI」
